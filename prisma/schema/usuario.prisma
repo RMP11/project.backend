@@ -2,7 +2,8 @@ model Usuario {
   id       Int     @id @default(autoincrement())
   correo    String  @unique
   contrasena String
-  nombre   String?
+  nombre   String
+  usuarioRol UsuarioRol[]
 
   @@map("usuarios")
 }
