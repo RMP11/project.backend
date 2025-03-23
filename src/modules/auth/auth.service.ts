@@ -15,10 +15,17 @@ export class AuthService {
     const usuario = await this._usuariosService.findOne({
       correo: signInDto.correo,
     });
-    if (await bcrypt.compare(usuario.contrasena, signInDto.contrasena)) {
+
+    const isMatch = await bcrypt.compare(
+      signInDto.contrasena,
+      usuario?.contrasena ?? '',
+    );
+
+    if (!isMatch) {
       throw new UnauthorizedException();
     }
-    const payload = { sub: usuario.id, correo: signInDto.correo };
+
+    const payload = { sub: usuario?.id, correo: signInDto.correo };
     return {
       ...usuario,
       contrasena: undefined,
