@@ -34,18 +34,14 @@ export class UsuariosService {
     return `This action returns all usuarios`;
   }
 
-  async findOneByUserName(correo: string) {
+  async findOne(where?: { id?: number; correo?: string }) {
     const usuario = await this._prismaService.usuario.findUnique({
-      where: { correo },
+      where: { id: where?.id, correo: where?.correo },
     });
 
     if (!usuario) throw new NotFoundException('Usuario no encontrado');
 
     return usuario;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} usuario`;
   }
 
   update(id: number, updateUsuarioDto: UpdateUsuarioDto) {

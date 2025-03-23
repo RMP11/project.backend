@@ -12,9 +12,9 @@ export class AuthService {
   ) {}
 
   async signIn(signInDto: SignInDto) {
-    const usuario = await this._usuariosService.findOneByUserName(
-      signInDto.correo,
-    );
+    const usuario = await this._usuariosService.findOne({
+      correo: signInDto.correo,
+    });
     if (await bcrypt.compare(usuario.contrasena, signInDto.contrasena)) {
       throw new UnauthorizedException();
     }
