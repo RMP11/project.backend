@@ -7,6 +7,7 @@ import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
+import { AsignarRolDto } from './dto/asignar-rol.dto';
 
 @Injectable()
 export class UsuariosService {
@@ -95,5 +96,38 @@ export class UsuariosService {
     });
 
     return { id };
+  }
+
+  async asignarRol(id: number, asignarRolDto: AsignarRolDto) {
+    await this.findOneAndThrow({ id });
+
+    const rol = await this._prismaService.rol.findUnique({
+      where: { id: asignarRolDto.rolId },
+    });
+
+    if (!rol) {
+      throw new BadRequestException('El rol no existe');
+    }
+
+    return await this._prismaService.usuarioRol.upsert({
+      where: { usuarioId_rolId: { usuarioId: id, rolId: asignarRolDto.rolId } },
+      create: { usuarioId: id, rolId: asignarRolDto.rolId },
+      update: { deletedAt: null },
+    });
+  }
+
+  async quitarRol(id: number, rolId: number) {
+    const usuarioRol = await this._prismaService.usuarioRol.findUnique({
+      where: { usuarioId_rolId: { usuarioId: id, rolId } },
+    });
+
+    if (!usuarioRol) {
+      throw new BadRequestException('asignación no existe');
+    }
+
+    return await this._prismaService.usuarioRol.update({
+      where: { usuarioId_rolId: { usuarioId: id, rolId } },
+      data: { deletedAt: new Date() },
+    });
   }
 }

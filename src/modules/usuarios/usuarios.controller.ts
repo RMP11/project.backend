@@ -12,6 +12,7 @@ import { UsuariosService } from './usuarios.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { AsignarRolDto } from './dto/asignar-rol.dto';
 
 @Controller('usuarios')
 @ApiBearerAuth()
@@ -45,5 +46,18 @@ export class UsuariosController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usuariosService.remove(+id);
+  }
+
+  @Post(':id/roles')
+  asignarRol(@Param('id') id: number, @Body() asignarDto: AsignarRolDto) {
+    return this.usuariosService.asignarRol(id, asignarDto);
+  }
+
+  @Delete(':id/roles/:rolId')
+  quitarRol(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Param('rolId', new ParseIntPipe()) rolId: number,
+  ) {
+    return this.usuariosService.quitarRol(id, rolId);
   }
 }
