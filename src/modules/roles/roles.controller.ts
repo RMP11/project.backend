@@ -30,7 +30,7 @@ export class RolesController {
 
   @Get(':id')
   findOne(@Param('id', new ParseIntPipe()) id: number) {
-    return this.rolesService.findOne({ id });
+    return this.rolesService.findOneAndThrow({ id });
   }
 
   @Patch(':id')

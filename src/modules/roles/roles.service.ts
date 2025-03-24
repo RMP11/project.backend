@@ -46,11 +46,10 @@ export class RolesService {
       where: {
         id: { not: id },
         nombre: updateRoleDto.nombre,
-        deletedAt: null,
       },
     });
 
-    if (rol) throw new BadRequestException('Correo ya existe');
+    if (rol) throw new BadRequestException('Rol ya existe');
 
     return await this._prismaService.rol.update({
       data: updateRoleDto,
