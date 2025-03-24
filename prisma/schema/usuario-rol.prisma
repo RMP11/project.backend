@@ -1,0 +1,9 @@
+model UsuarioRol {
+    usuarioId Int
+    rolId     Int
+    usuario   Usuario @relation(fields: [usuarioId], references: [id])
+    rol       Rol     @relation(fields: [rolId], references: [id])
+
+    @@id([usuarioId, rolId]) // Llave primaria compuesta
+    @@map("usuarios_roles")
+}

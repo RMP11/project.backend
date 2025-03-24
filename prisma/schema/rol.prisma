@@ -1,13 +1,11 @@
-model Usuario {
+model Rol {
   id            Int          @id @default(autoincrement())
-  correo        String       @unique
-  contrasena    String
-  nombre        String
+  nombre        String       @unique
   usuariosRoles UsuarioRol[]
 
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
 
-  @@map("usuarios")
+  @@map("roles")
 }
