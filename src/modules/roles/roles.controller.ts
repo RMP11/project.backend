@@ -11,7 +11,8 @@ import {
 import { RolesService } from './roles.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import { AsignarPermisoDto } from './dto/asignar-permiso.dto';
 
 @Controller('roles')
 @ApiBearerAuth()
@@ -44,5 +45,16 @@ export class RolesController {
   @Delete(':id')
   remove(@Param('id') id: number) {
     return this.rolesService.remove(id);
+  }
+
+  @Post(':id/permisos')
+  @ApiOperation({
+    summary: 'asigna o quita permisos de un rol',
+  })
+  asignarQuitarPermiso(
+    @Param('id') id: number,
+    @Body() asignarDto: AsignarPermisoDto,
+  ) {
+    return this.rolesService.asignarQuitarPermiso(id, asignarDto);
   }
 }

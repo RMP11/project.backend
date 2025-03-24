@@ -6,6 +6,7 @@ import {
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { AsignarPermisoDto } from './dto/asignar-permiso.dto';
 
 @Injectable()
 export class RolesService {
@@ -66,5 +67,42 @@ export class RolesService {
     });
 
     return { id };
+  }
+
+  async asignarQuitarPermiso(id: number, asignarPermisoDto: AsignarPermisoDto) {
+    const rolPermiso = await this._prismaService.rolPermiso.findUnique({
+      where: {
+        rolId_permisoId: { permisoId: asignarPermisoDto.permisoId, rolId: id },
+      },
+    });
+
+    if (rolPermiso) {
+      return await this._prismaService.rolPermiso.update({
+        where: {
+          rolId_permisoId: {
+            permisoId: asignarPermisoDto.permisoId,
+            rolId: id,
+          },
+        },
+
+        data: {
+          deletedAt: rolPermiso.deletedAt ? null : new Date(),
+        },
+      });
+    }
+
+    await this.findOneAndThrow({ id });
+
+    const permiso = await this._prismaService.permiso.findUnique({
+      where: { id: asignarPermisoDto.permisoId, deletedAt: null },
+    });
+
+    if (!permiso) {
+      throw new BadRequestException('El permiso no existe');
+    }
+
+    return await this._prismaService.rolPermiso.create({
+      data: { rolId: id, permisoId: asignarPermisoDto.permisoId },
+    });
   }
 }
