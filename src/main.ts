@@ -7,6 +7,11 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 async function bootstrap() {
   const logger = new Logger('bootstrap');
   const app = await NestFactory.create(AppModule);
+  app.setGlobalPrefix('api');
+
+  app.enableCors({
+    origin: 'http://localhost:4000',
+  });
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
@@ -19,7 +24,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, documentFactory, {
+  SwaggerModule.setup('apidoc', app, documentFactory, {
     swaggerOptions: {
       persistAuthorization: true,
     },
@@ -29,7 +34,8 @@ async function bootstrap() {
 
   await app.listen(port ?? 5000, '0.0.0.0').then(async () => {
     logger.verbose(`Server running on ${await app.getUrl()}`);
-    logger.verbose(`Server running on ${(await app.getUrl()) + '/api'}`);
+    logger.verbose(`Api running on ${await app.getUrl()}` + '/api');
+    logger.verbose(`Swagger running on ${(await app.getUrl()) + '/apidoc'}`);
   });
 }
 
