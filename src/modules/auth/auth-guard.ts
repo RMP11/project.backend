@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate {
       .getRequest();
     const token = this.extractTokenFromHeader(request);
     if (!token) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Acceso no autorizado');
     }
     try {
       const payload: { [key in string]: any } =
@@ -39,7 +39,7 @@ export class AuthGuard implements CanActivate {
         });
       request.usuario = payload;
     } catch {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Acceso no autorizado');
     }
     return true;
   }

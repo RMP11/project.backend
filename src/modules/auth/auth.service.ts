@@ -16,13 +16,17 @@ export class AuthService {
       correo: signInDto.correo,
     });
 
+    if (!usuario) {
+      throw new UnauthorizedException('Acceso no autorizado');
+    }
+
     const isMatch = await bcrypt.compare(
       signInDto.contrasena,
       usuario?.contrasena ?? '',
     );
 
     if (!isMatch) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Acceso no autorizado');
     }
 
     const payload = { sub: usuario?.id, correo: signInDto.correo };
