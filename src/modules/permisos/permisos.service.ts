@@ -37,7 +37,7 @@ export class PermisosService {
 
   findOne(where?: { id?: number; nombre?: string }) {
     return this._prismaService.permiso.findUnique({
-      where: { id: where?.id, nombre: where?.nombre, deletedAt: null },
+      where: { id: where?.id, nombre: where?.nombre },
     });
   }
 
