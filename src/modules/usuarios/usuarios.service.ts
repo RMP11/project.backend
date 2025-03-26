@@ -40,6 +40,7 @@ export class UsuariosService {
         correo: true,
         nombre: true,
         createdAt: true,
+        updatedAt: true,
       },
     });
   }
