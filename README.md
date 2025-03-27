@@ -7,6 +7,10 @@
 $ yarn install
 ```
 
+## Crear .env
+
+Ubicar el archivo `.env.sample` y renombrarla a `.env`
+
 ## Ejecutar Seeders
 
 ```bash
