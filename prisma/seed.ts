@@ -1,12 +1,14 @@
 import { PrismaClient } from '@prisma/client';
 import { seedPublicaciones } from './seeders/publicacionesSeeder';
 import { usuarioSeeder } from './seeders/usuarioSeeder';
+import { permisosSeeder } from './seeders/permisosSeeder';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  await seedPublicaciones();
+  await permisosSeeder();
   await usuarioSeeder();
+  await seedPublicaciones();
 }
 
 main()
