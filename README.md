@@ -1,5 +1,7 @@
 # Configuración del proyecto
 
+## Require node 22 o superior
+
 ## Instalar dependencias
 
 ```bash
@@ -37,3 +39,9 @@ $ yarn run start:dev
 # production mode
 $ yarn run start:prod
 ```
+
+### Usuario Para iniciar sesión
+
+correo: `admin@fake.com`
+
+contrasena: `123456`
