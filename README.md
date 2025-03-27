@@ -11,6 +11,13 @@ $ yarn install
 
 Ubicar el archivo `.env.sample` y renombrarla a `.env`
 
+## Crear tablas
+
+```bash
+#
+$ npx prisma db push
+```
+
 ## Ejecutar Seeders
 
 ```bash
