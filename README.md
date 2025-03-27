@@ -27,6 +27,8 @@ $ npx prisma db push
 $ yarn seed
 ```
 
+NOTA: si falla, eliminar el archivo `project-name.backend\prisma\projectDB.db` y ejecuta nuevamente `npx prisma db push` y luego `yarn seed`
+
 ## Compilar y ejecutar el proyecto
 
 ```bash
