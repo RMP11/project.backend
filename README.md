@@ -45,3 +45,5 @@ $ yarn run start:prod
 correo: `admin@fake.com`
 
 contrasena: `123456`
+
+### CORS Habilitado, con origen para `http://localhost:4000`
