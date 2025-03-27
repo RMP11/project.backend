@@ -7,6 +7,7 @@ import { UsuariosModule } from './modules/usuarios/usuarios.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { RolesModule } from './modules/roles/roles.module';
 import { PermisosModule } from './modules/permisos/permisos.module';
+import { PublicacionesModule } from './modules/publicaciones/publicaciones.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { PermisosModule } from './modules/permisos/permisos.module';
     AuthModule,
     RolesModule,
     PermisosModule,
+    PublicacionesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
