@@ -25,7 +25,12 @@ export class RolesService {
   findAll() {
     return this._prismaService.rol.findMany({
       where: { deletedAt: null },
-      include: { rolesPermisos: { include: { permiso: true } } },
+      include: {
+        rolesPermisos: {
+          include: { permiso: true },
+          where: { deletedAt: null },
+        },
+      },
     });
   }
 
